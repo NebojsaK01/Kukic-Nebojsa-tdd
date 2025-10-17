@@ -1,0 +1,5 @@
+#ignore the JUnit jar file
+*.jar
+
+#Ignore the lib folder also
+/lib/
