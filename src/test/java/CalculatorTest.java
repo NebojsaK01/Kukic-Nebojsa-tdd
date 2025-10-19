@@ -13,11 +13,16 @@ class CalculatorTest {
         Calculator c = new Calculator();
         assertEquals(5, c.subtract(12, 7));
     }
+
     @Test
     void testMultiply() {
         Calculator c = new Calculator();
         assertEquals(21, c.multiply(7, 3));
     }
 
-
+    @Test
+    void testDivide() {
+        Calculator c = new Calculator();
+        assertEquals(5, c.divide(20, 4));
+    }
 }
