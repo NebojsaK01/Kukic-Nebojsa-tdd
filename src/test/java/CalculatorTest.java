@@ -7,4 +7,10 @@ class CalculatorTest {
         Calculator c = new Calculator();
         assertEquals(10, c.add(7,3));
     }
+
+    @Test
+    void subtract() {
+        Calculator c = new Calculator();
+        assertEquals(5, c.subtract(12, 7));
+    }
 }
