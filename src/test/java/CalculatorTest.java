@@ -49,4 +49,18 @@ class CalculatorTest {
         assertEquals(expected, c.add(a, b));
     }
 
+    @ParameterizedTest
+    @CsvSource({
+            "10, 5, 5",
+            "5, 3, 2",
+            "432, 331, 101",
+            "211, 211, 0",
+            "6, 2, 4"
+    })
+    void testSubtractParameterized(int a, int b, int expected) {
+        Calculator c = new Calculator();
+        assertEquals(expected, c.subtract(a, b));
+    }
+
+
 }
