@@ -25,4 +25,10 @@ class CalculatorTest {
         Calculator c = new Calculator();
         assertEquals(5, c.divide(20, 4));
     }
+
+    @Test
+    void testDivideByZero() {
+        Calculator c = new Calculator();
+        assertThrows(IllegalArgumentException.class, () -> c.divide(20, 0));
+    }
 }
