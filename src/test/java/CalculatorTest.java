@@ -36,7 +36,8 @@ class CalculatorTest {
             "7, 3, 10",
             "0, 0, 0",
             "31, 0, 31",
-            "0, -10, -10"
+            "0, -10, -10",
+            "-123, -123, -246"
     })
     void testAddParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
