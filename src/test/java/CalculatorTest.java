@@ -62,7 +62,8 @@ class CalculatorTest {
             "1, 1, 1",
             "-1, 10, -10",
             "-1, -1, 1",
-            "2147483647, 1, 2147483647" // MAX VALUE
+            "2147483647, 1, 2147483647", // MAX VALUE
+            "-2147483648, 1, -2147483648" // MIN VALUE
     })
     void testMultiplyParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
