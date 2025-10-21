@@ -66,7 +66,8 @@ class CalculatorTest {
 
     @ParameterizedTest
     @CsvSource({
-            "20, 4, 5"
+            "20, 4, 5",
+            "1, 1, 1"
     })
     void testDivideParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
