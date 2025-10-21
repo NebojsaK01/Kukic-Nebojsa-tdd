@@ -35,7 +35,8 @@ class CalculatorTest {
     @CsvSource({
             "7, 3, 10",
             "0, 0, 0",
-            "31, 0, 31"
+            "31, 0, 31",
+            "0, -10, -10"
     })
     void testAddParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
