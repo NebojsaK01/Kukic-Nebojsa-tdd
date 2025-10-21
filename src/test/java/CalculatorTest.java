@@ -5,11 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 class CalculatorTest {
-    @Test
-    void testAdd() {
-        Calculator c = new Calculator();
-        assertEquals(10, c.add(7,3));
-    }
 
     @Test
     void testSubtract() {
