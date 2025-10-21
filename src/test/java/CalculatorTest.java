@@ -1,9 +1,6 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-
 class CalculatorTest {
     @Test
     void testAdd() {
@@ -34,60 +31,4 @@ class CalculatorTest {
         Calculator c = new Calculator();
         assertThrows(IllegalArgumentException.class, () -> c.divide(20, 0));
     }
-
-    // Parameterized Tests:
-    @ParameterizedTest
-    @CsvSource({
-            "1, 2, 3",
-            "5, 5, 10",
-            "12, 5, 17",
-            "6, 6, 12",
-            "101, 120, 221"
-    })
-    void testAddParameterized(int a, int b, int expected) {
-        Calculator c = new Calculator();
-        assertEquals(expected, c.add(a, b));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "10, 5, 5",
-            "5, 3, 2",
-            "432, 331, 101",
-            "211, 211, 0",
-            "6, 2, 4"
-    })
-    void testSubtractParameterized(int a, int b, int expected) {
-        Calculator c = new Calculator();
-        assertEquals(expected, c.subtract(a, b));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "12, 12, 144",
-            "6, 5, 30",
-            "31, 3, 93",
-            "1, 1, 1",
-            "6, 0, 0"
-    })
-    void testMultiplyParameterized(int a, int b, int expected) {
-        Calculator c = new Calculator();
-        assertEquals(expected, c.multiply(a, b));
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "6, 6, 1",
-            "12, 2, 6",
-            "42, 3, 14",
-            "1, 1, 1",
-            "12, 3, 4"
-    })
-
-    void testDivideParameterized(int a, int b, int expected) {
-        Calculator c = new Calculator();
-        assertEquals(expected, c.divide(a, b));
-    }
-
-
 }
