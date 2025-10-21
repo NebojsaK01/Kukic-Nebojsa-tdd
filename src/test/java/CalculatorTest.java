@@ -69,4 +69,13 @@ class CalculatorTest {
         Calculator c = new Calculator();
         assertEquals(expected, c.multiply(a, b));
     }
+
+    @ParameterizedTest
+    @CsvSource({
+            "20, 4, 5"
+    })
+    void testDivideParameterized(int a, int b, int expected) {
+        Calculator c = new Calculator();
+        assertEquals(expected, c.divide(a, b));
+    }
 }
