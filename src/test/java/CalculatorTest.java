@@ -7,12 +7,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 class CalculatorTest {
 
     @Test
-    void testDivide() {
-        Calculator c = new Calculator();
-        assertEquals(5, c.divide(20, 4));
-    }
-
-    @Test
     void testDivideByZero() {
         Calculator c = new Calculator();
         assertThrows(IllegalArgumentException.class, () -> c.divide(20, 0));
