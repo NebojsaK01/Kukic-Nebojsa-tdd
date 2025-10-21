@@ -46,7 +46,8 @@ class CalculatorTest {
     // Parameterized Tests:
     @ParameterizedTest
     @CsvSource({
-            "12, 7, 5"
+            "12, 7, 5",
+            "0, 0, 0"
 
     })
     void testSubtractParameterized(int a, int b, int expected) {
