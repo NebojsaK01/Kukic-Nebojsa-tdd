@@ -60,7 +60,8 @@ class CalculatorTest {
             "7, 3, 21",
             "0, 0, 0",
             "1, 1, 1",
-            "-1, 10, -10"
+            "-1, 10, -10",
+            "-1, -1, 1"
     })
     void testMultiplyParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
