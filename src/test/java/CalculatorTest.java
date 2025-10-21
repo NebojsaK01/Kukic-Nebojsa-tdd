@@ -43,11 +43,22 @@ class CalculatorTest {
             "2147483647, 0, 2147483647", // MAX VALUE
             "0, -2147483648, -2147483648", // MIN VALUE
             "1_000_000, 1_000_000, 2_000_000"
-
-
     })
     void testAddParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
         assertEquals(expected, c.add(a, b));
     }
+
+    // Parameterized Tests:
+    @ParameterizedTest
+    @CsvSource({
+            "12, 7, 5"
+
+    })
+    void testSubtractParameterized(int a, int b, int expected) {
+        Calculator c = new Calculator();
+        assertEquals(expected, c.subtract(a, b));
+    }
+
+
 }
