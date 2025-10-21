@@ -69,7 +69,8 @@ class CalculatorTest {
             "20, 4, 5",
             "1, 1, 1",
             "-1, 1, -1",
-            "0 ,1, 0"
+            "0 ,1, 0",
+            "2147483647, 1, 2147483647" // MAX VALUE
     })
     void testDivideParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
