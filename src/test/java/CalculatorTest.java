@@ -60,5 +60,13 @@ class CalculatorTest {
         assertEquals(expected, c.subtract(a, b));
     }
 
-
+    // Parameterized Tests:
+    @ParameterizedTest
+    @CsvSource({
+            "7, 3, 21"
+    })
+    void testMultiplyParameterized(int a, int b, int expected) {
+        Calculator c = new Calculator();
+        assertEquals(expected, c.multiply(a, b));
+    }
 }
