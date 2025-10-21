@@ -51,7 +51,8 @@ class CalculatorTest {
             "1, 1, 0",
             "-1, 1, -2",
             "1, -1, 2",
-            "2147483647, 0, 2147483647" // MAX VALUE
+            "2147483647, 0, 2147483647", // MAX VALUE
+            "-2147483648, 0, -2147483648" // MIN VALUE
 
     })
     void testSubtractParameterized(int a, int b, int expected) {
