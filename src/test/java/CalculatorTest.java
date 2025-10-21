@@ -57,7 +57,8 @@ class CalculatorTest {
     // Parameterized Tests:
     @ParameterizedTest
     @CsvSource({
-            "7, 3, 21"
+            "7, 3, 21",
+            "0, 0, 0"
     })
     void testMultiplyParameterized(int a, int b, int expected) {
         Calculator c = new Calculator();
