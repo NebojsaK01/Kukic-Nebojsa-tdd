@@ -158,4 +158,33 @@ public class ReservationServiceTest {
         assertTrue(bookIds.contains("1"));
         assertTrue(bookIds.contains("2"));
     }
+
+    @Test
+    void listReservationsForBook_ShouldReturnBookReservations() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create books
+        Book book1 = new Book("1", "The Bible", 10);
+        Book book2 = new Book("2", "Java Programming", 5);
+        bookRepo.save(book1);
+        bookRepo.save(book2);
+
+        // Multiple users reserve the same book
+        service.reserve("Nebojsa", "1");
+        service.reserve("Alice", "1");
+        service.reserve("Bob", "2");  // Different book
+
+        // List reservations for book "1"
+        List<Reservation> reservations = service.listReservationsForBook("1");
+
+        // Debug output
+        System.out.println("Reservations for book 1: " + reservations.size());
+        for (Reservation r : reservations) {
+            System.out.println(" - User: " + r.getUserId() + ", Book: " + r.getBookId());
+        }
+
+
+    }
 }
