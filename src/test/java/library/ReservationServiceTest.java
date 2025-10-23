@@ -216,4 +216,29 @@ public class ReservationServiceTest {
 
         assertTrue(reservations.isEmpty());
     }
+
+    @Test
+    void listReservationsForBook_ShouldOnlyReturnCurrentBookReservations() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        Book book1 = new Book("1", "The Bible", 10);
+        Book book2 = new Book("2", "Java Programming", 5);
+        bookRepo.save(book1);
+        bookRepo.save(book2);
+
+        // User reserves both books
+        service.reserve("Nebojsa", "1");
+        service.reserve("Nebojsa", "2");
+
+        // List only reservations for book "1"
+        List<Reservation> book1Reservations = service.listReservationsForBook("1");
+
+        System.out.println("Book 1 reservations: " + book1Reservations.size());
+
+        assertEquals(1, book1Reservations.size());
+        assertEquals("1", book1Reservations.get(0).getBookId());
+        assertEquals("Nebojsa", book1Reservations.get(0).getUserId());
+    }
 }
