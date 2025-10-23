@@ -185,6 +185,8 @@ public class ReservationServiceTest {
             System.out.println(" - User: " + r.getUserId() + ", Book: " + r.getBookId());
         }
 
+        // Should have 2 reservations for book "1"
+        assertEquals(2, reservations.size());
 
     }
 }
