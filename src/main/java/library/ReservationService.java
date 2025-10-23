@@ -62,6 +62,7 @@ public class ReservationService {
     public List<Reservation> listReservations(String userId) {
         // TODO: Implement using TDD
         return reservationRepo.findByUser(userId);
+
     }
 
     /**
