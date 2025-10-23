@@ -102,6 +102,7 @@ public class ReservationServiceTest {
         // confirm if copies goes from 9 --> 10
         assertEquals(10, book.getCopiesAvailable());
 
-
+        // confirm if book has been deleted.
+        assertFalse(reservationRepo.existsByUserAndBook("Nebojsa", "1"));
     }
 }
