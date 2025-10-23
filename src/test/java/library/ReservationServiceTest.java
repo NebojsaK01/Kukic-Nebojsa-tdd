@@ -23,5 +23,8 @@ public class ReservationServiceTest {
 
         // check if reservation was created + saved.
         assertTrue(reservationRepo.existsByUserAndBook("Nebojsa", "1"));
+
+        //check if the copies goes from 10 ->> 9
+        assertEquals(9, book.getCopiesAvailable());
     }
 }
