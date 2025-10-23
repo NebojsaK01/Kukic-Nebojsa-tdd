@@ -21,6 +21,7 @@ public class ReservationServiceTest {
         // reserve the book
         service.reserve("Nebojsa",  "1");
 
-
+        // check if reservation was created + saved.
+        assertTrue(reservationRepo.existsByUserAndBook("Nebojsa", "1"));
     }
 }
