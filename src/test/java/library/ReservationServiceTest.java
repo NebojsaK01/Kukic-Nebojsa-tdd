@@ -241,4 +241,27 @@ public class ReservationServiceTest {
         assertEquals("1", book1Reservations.get(0).getBookId());
         assertEquals("Nebojsa", book1Reservations.get(0).getUserId());
     }
-}
+
+    @Test
+    void boundaryTestForReservingLastCopy() {
+        // essentially made b4 but not specifically for last copy:
+        // Set up the repos and service.
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book - id: 1, title: The Bible, copies Available: 1
+        Book book = new Book("1", "The Bible", 1); // last copy
+        bookRepo.save(book); // save the book
+
+
+        // reserve the book
+        service.reserve("Nebojsa",  "1");
+
+        // check if reservation was created + saved.
+        assertTrue(reservationRepo.existsByUserAndBook("Nebojsa", "1"));
+
+        //check if the copies goes from 10 ->> 9
+        assertEquals(0, book.getCopiesAvailable());
+        }
+    }
