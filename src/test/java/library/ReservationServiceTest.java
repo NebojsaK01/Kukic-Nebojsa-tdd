@@ -67,4 +67,17 @@ public class ReservationServiceTest {
 
         assertEquals("The user already reserved this book", exception.getMessage());
     }
+
+    @Test
+    void userCannotReserveIfBookNotFound() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // validate if a book exists - can lead to CRASH.
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> service.reserve("Nebojsa", "NON_EXISTENT_BOOK"));
+
+        assertEquals("Book not found", exception.getMessage());
+    }
 }
