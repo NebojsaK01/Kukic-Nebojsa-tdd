@@ -80,4 +80,28 @@ public class ReservationServiceTest {
 
         assertEquals("Book not found", exception.getMessage());
     }
+
+
+    @Test
+    void increaseCopiesAvailableWhenCancellingReservation() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book - id: 1, title: The Bible, copies Available: 10
+
+        Book book = new Book("1", "The Bible", 10);
+        bookRepo.save(book); // save the book
+
+        // confirm if copies goes from 10 --> 9 --- same as b4
+        service.reserve("Nebojsa",  "1");
+        assertEquals(9, book.getCopiesAvailable());
+
+        // Cancel the reservation
+        service.cancel("Nebojsa", "1");
+        // confirm if copies goes from 9 --> 10
+        assertEquals(10, book.getCopiesAvailable());
+
+
+    }
 }
