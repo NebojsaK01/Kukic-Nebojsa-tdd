@@ -1,6 +1,9 @@
 package library;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ReservationServiceTest {
@@ -124,5 +127,35 @@ public class ReservationServiceTest {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
                 () -> service.cancel("Nebojsa", "1"));
         assertEquals("No reservations found", exception.getMessage());
+    }
+
+    @Test
+    void listingTheReservationsForGivenUser() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create books
+        Book book1 = new Book("1", "The Bible", 10);
+        Book book2 = new Book("2", "Java Programming", 5);
+        bookRepo.save(book1);
+        bookRepo.save(book2);
+
+        // Make reservations for user "Nebojsa"
+        service.reserve("Nebojsa", "1");
+        service.reserve("Nebojsa", "2");
+
+        // List reservations for Nebojsa
+        List<Reservation> reservations = service.listReservations("Nebojsa");
+
+        // Should have 2 reservations
+        assertEquals(2, reservations.size());
+
+        // Verify both book IDs are in the list
+        List<String> bookIds = reservations.stream()
+                .map(Reservation::getBookId)
+                .toList();
+        assertTrue(bookIds.contains("1"));
+        assertTrue(bookIds.contains("2"));
     }
 }
