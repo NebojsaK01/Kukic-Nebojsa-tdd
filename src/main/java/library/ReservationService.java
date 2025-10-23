@@ -20,6 +20,10 @@ public class ReservationService {
         // TODO: Implement using TDD
         Book book = bookRepo.findById(bookId);
 
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found");
+        }
+
         if (book.getCopiesAvailable() <= 0) {
             throw new IllegalStateException("No copies available");
         }
