@@ -195,5 +195,8 @@ public class ReservationServiceTest {
         assertTrue(userIds.contains("Nebojsa"));
         assertTrue(userIds.contains("Alice"));
 
+        // All reservations should be for book "1"
+        assertTrue(reservations.stream().allMatch(r -> r.getBookId().equals("1")));
+
     }
 }
