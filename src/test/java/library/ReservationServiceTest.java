@@ -105,4 +105,24 @@ public class ReservationServiceTest {
         // confirm if book has been deleted.
         assertFalse(reservationRepo.existsByUserAndBook("Nebojsa", "1"));
     }
+
+
+    @Test
+    void tryingToCancelReservationWhenThereIsNoReservation() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book - id: 1, title: The Bible, copies Available: 10
+
+        Book book = new Book("1", "The Bible", 10);
+        bookRepo.save(book); // save the book
+
+        // No reservation made here.
+
+        // Cancelling the reservation without actually reserving.
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+                () -> service.cancel("Nebojsa", "1"));
+        assertEquals("No reservations found", exception.getMessage());
+    }
 }
