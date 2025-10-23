@@ -18,6 +18,8 @@ public class ReservationService {
      */
     public void reserve(String userId, String bookId) {
         // TODO: Implement using TDD
+        Reservation reservation = new Reservation(userId, bookId);
+        reservationRepo.save(reservation);
     }
 
     /**
