@@ -199,4 +199,21 @@ public class ReservationServiceTest {
         assertTrue(reservations.stream().allMatch(r -> r.getBookId().equals("1")));
 
     }
+
+    @Test
+    void listReservationsForBook_ShouldReturnEmptyList_WhenNoReservations() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        Book book = new Book("1", "The Bible", 10);
+        bookRepo.save(book);
+
+        // List reservations for book with no reservations
+        List<Reservation> reservations = service.listReservationsForBook("1");
+
+        System.out.println("Reservations for book with no reservations: " + reservations.size());
+
+        assertTrue(reservations.isEmpty());
+    }
 }
