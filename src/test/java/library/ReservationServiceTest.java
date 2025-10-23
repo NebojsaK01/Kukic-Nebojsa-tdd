@@ -188,5 +188,12 @@ public class ReservationServiceTest {
         // Should have 2 reservations for book "1"
         assertEquals(2, reservations.size());
 
+        // Verify both users reserved book "1"
+        List<String> userIds = reservations.stream()
+                .map(Reservation::getUserId)
+                .toList();
+        assertTrue(userIds.contains("Nebojsa"));
+        assertTrue(userIds.contains("Alice"));
+
     }
 }
