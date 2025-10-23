@@ -45,4 +45,26 @@ public class ReservationServiceTest {
 
         assertEquals("No copies available", exception.getMessage());
     }
+
+    @Test
+    void userCannotReserveSameBookAlreadyReserved() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book - id: 1, title: The Bible, copies Available: 10
+        // can use same details for different tests as they're all in isolation
+        Book book = new Book("1", "The Bible", 10);
+        bookRepo.save(book); // save the book
+
+
+        // first reservation
+        service.reserve("Nebojsa",  "1");
+
+        // second reservation
+        IllegalStateException exception = assertThrows(IllegalStateException.class,
+                () -> service.reserve("Nebojsa", "1"));
+
+        assertEquals("The user already reserved this book", exception.getMessage());
+    }
 }
