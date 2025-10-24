@@ -301,6 +301,28 @@ public class ReservationServiceTest {
         // This test will fail until we implement the waiting list logic
 
     }
+
+    @Test
+    void cancellation_ShouldAssignBookToFirstWaitingUser() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book with 0 copies
+        Book book = new Book("1", "Popular Book", 0);
+        bookRepo.save(book);
+
+        // Priority users join waiting list
+        service.reservePriority("PriorityUser1", "1");
+        service.reservePriority("PriorityUser2", "1");
+
+        // Someone cancels a reservation (simulate copy return)
+        // We need to add a reservation first to cancel
+        // This reveals we need to modify our approach
+        service.reserve("RegularUser", "1"); // This will fail with 0 copies
+
+        fail("Need to redesign - current approach doesn't handle waiting list assignment");
+    }
 }
 
 
