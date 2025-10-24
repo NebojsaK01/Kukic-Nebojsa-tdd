@@ -323,6 +323,7 @@ public class ReservationServiceTest {
 
         fail("Need to redesign - current approach doesn't handle waiting list assignment");
     }
+
 }
 
 
