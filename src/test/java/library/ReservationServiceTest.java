@@ -281,6 +281,26 @@ public class ReservationServiceTest {
         // confirm if reservation exists with user + book.
         assertTrue(reservationRepo.existsByUserAndBook("PriorityUser", "1"));
     }
+
+    @Test
+    void cancellation_ShouldAssignToFirstWaitingUser() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book with 0 copies
+        Book book = new Book("1", "Popular Book", 0);
+        bookRepo.save(book);
+
+        // Priority users join waiting list
+        service.reservePriority("PriorityUser1", "1");
+        service.reservePriority("PriorityUser2", "1");
+
+        // Regular user cancels (simulating copy return)
+        // We need a way to trigger waiting list processing
+        // This test will fail until we implement the waiting list logic
+        fail("Waiting list functionality not implemented yet");
+    }
 }
 
 
