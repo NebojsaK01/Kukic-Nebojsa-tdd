@@ -17,14 +17,21 @@ public class ReservationService {
      * Throws IllegalStateException if no copies available or user already reserved.
      */
     public void reserve(String userId, String bookId) {
-        // TODO: Implement using TDD
+        reserve(userId, bookId, false);
+    }
+
+    public void reservePriority(String userId, String bookId) {
+        reserve(userId, bookId, true);
+    }
+
+    private void reserve(String userId, String bookId, boolean isPriority) {
         Book book = bookRepo.findById(bookId);
 
         if (book == null) {
             throw new IllegalArgumentException("Book not found");
         }
 
-        if (book.getCopiesAvailable() <= 0) {
+        if (!isPriority && book.getCopiesAvailable() <= 0) {
             throw new IllegalStateException("No copies available");
         }
 
@@ -35,12 +42,11 @@ public class ReservationService {
         Reservation reservation = new Reservation(userId, bookId);
         reservationRepo.save(reservation);
 
-        book.setCopiesAvailable(book.getCopiesAvailable() - 1);
-        bookRepo.save(book);
-    }
-
-    public void reservePriority(String userId, String bookId) {
-        reserve(userId, bookId);
+        // Only decrease copies if available
+        if (book.getCopiesAvailable() > 0) {
+            book.setCopiesAvailable(book.getCopiesAvailable() - 1);
+            bookRepo.save(book);
+        }
     }
 
     /**
