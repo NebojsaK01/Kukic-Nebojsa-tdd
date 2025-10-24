@@ -263,5 +263,21 @@ public class ReservationServiceTest {
 
         //check if the copies goes from 10 ->> 9
         assertEquals(0, book.getCopiesAvailable());
-        }
     }
+
+    @Test
+    void priorityUser_CanReserve_WhenNoCopiesAvailable() {
+        IBookRepository bookRepo = new MemoryBookRepository();
+        IReservationRepository reservationRepo = new MemoryReservationRepository();
+        ReservationService service = new ReservationService(bookRepo, reservationRepo);
+
+        // Create book with no copies
+        Book book = new Book("1", "The Saga of Bobby", 0);
+        bookRepo.save(book);
+
+        // Priority user should be able to reserve despite no copies of book
+        service.reservePriority("PriorityUser", "1");
+    }
+}
+
+
