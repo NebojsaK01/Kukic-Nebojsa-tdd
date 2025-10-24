@@ -320,22 +320,8 @@ public class ReservationServiceTest {
         service.reservePriority("PriorityUser1", "1");
         service.reservePriority("PriorityUser2", "1");
 
-        // DEBUG: Check initial state
-        System.out.println("Before cancel:");
-        System.out.println("RegularUser has reservation: " + reservationRepo.existsByUserAndBook("RegularUser", "1"));
-        System.out.println("PriorityUser1 has reservation: " + reservationRepo.existsByUserAndBook("PriorityUser1", "1"));
-        System.out.println("PriorityUser2 has reservation: " + reservationRepo.existsByUserAndBook("PriorityUser2", "1"));
-        System.out.println("Copies: " + book.getCopiesAvailable());
-
         // Regular user cancels - should assign to first waiting user
         service.cancel("RegularUser", "1");
-
-        // DEBUG: Check final state
-        System.out.println("After cancel:");
-        System.out.println("RegularUser has reservation: " + reservationRepo.existsByUserAndBook("RegularUser", "1"));
-        System.out.println("PriorityUser1 has reservation: " + reservationRepo.existsByUserAndBook("PriorityUser1", "1"));
-        System.out.println("PriorityUser2 has reservation: " + reservationRepo.existsByUserAndBook("PriorityUser2", "1"));
-        System.out.println("Copies: " + book.getCopiesAvailable());
 
         // BOTH PriorityUser1 and PriorityUser2 should still have reservations
         // The assignment happens implicitly - PriorityUser1 is now effectively "first in line"
