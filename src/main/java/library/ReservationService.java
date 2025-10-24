@@ -64,18 +64,40 @@ public class ReservationService {
      * Throws IllegalArgumentException if no such reservation exists.
      */
     public void cancel(String userId, String bookId) {
-        // TODO: Implement using TDD
         if (!reservationRepo.existsByUserAndBook(userId, bookId)) {
             throw new IllegalArgumentException("No reservations found");
         }
 
+        // Get book BEFORE deleting reservation to check current state
+        Book book = bookRepo.findById(bookId);
+        if (book == null) {
+            throw new IllegalArgumentException("Book not found");
+        }
+
+        // Store whether book had available copies before cancellation
+        boolean hadAvailableCopies = book.getCopiesAvailable() > 0;
+
         reservationRepo.delete(userId, bookId);
 
-        Book book = bookRepo.findById(bookId);
-        book.setCopiesAvailable(book.getCopiesAvailable()+  1);
-        bookRepo.save(book);
-    }
+        // Check if there are users waiting for this book
+        Queue<String> waitingList = waitingLists.get(bookId);
+        if (waitingList != null && !waitingList.isEmpty() && !hadAvailableCopies) {
+            // Book had 0 copies and has waiting users - assign to first waiting user
+            String nextUserId = waitingList.poll();
+            // Don't create new reservation - waiting user already has one
+            // Just remove them from waiting list (already done by poll())
+            System.out.println("Assigned book to waiting user: " + nextUserId);
+        } else {
+            // Either no waiting list OR book had available copies - increase copies
+            book.setCopiesAvailable(book.getCopiesAvailable() + 1);
+            bookRepo.save(book);
+        }
 
+        // Clean up empty waiting lists
+        if (waitingList != null && waitingList.isEmpty()) {
+            waitingLists.remove(bookId);
+        }
+    }
     /**
      * List all active reservations for a given user.
      */
