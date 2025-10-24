@@ -2,14 +2,11 @@ package library;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 public class ReservationService {
 
     private final IBookRepository bookRepo;
     private final IReservationRepository reservationRepo;
-    private final Map<String, Queue<String>> waitingLists = new HashMap<>(); //
 
     public ReservationService(IBookRepository bookRepo, IReservationRepository reservationRepo) {
         this.bookRepo = bookRepo;
