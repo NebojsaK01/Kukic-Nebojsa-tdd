@@ -277,6 +277,9 @@ public class ReservationServiceTest {
 
         // Priority user should be able to reserve despite no copies of book
         service.reservePriority("PriorityUser", "1");
+
+        // confirm if reservation exists with user + book.
+        assertTrue(reservationRepo.existsByUserAndBook("PriorityUser", "1"));
     }
 }
 
