@@ -299,6 +299,7 @@ public class ReservationServiceTest {
         // Regular user cancels (simulating copy return)
         // We need a way to trigger waiting list processing
         // This test will fail until we implement the waiting list logic
+
     }
 }
 
