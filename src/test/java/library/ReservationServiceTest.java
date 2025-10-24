@@ -308,22 +308,26 @@ public class ReservationServiceTest {
         IReservationRepository reservationRepo = new MemoryReservationRepository();
         ReservationService service = new ReservationService(bookRepo, reservationRepo);
 
-        // Create book with 0 copies
-        Book book = new Book("1", "Popular Book", 0);
+        // Create book with 1 copy (not 0)
+        Book book = new Book("1", "Popular Book", 1);
         bookRepo.save(book);
 
-        // Priority users join waiting list
+        // Regular user reserves the only copy
+        service.reserve("RegularUser", "1");
+        assertEquals(0, book.getCopiesAvailable());
+
+        // Priority users join waiting list (book now has 0 copies)
         service.reservePriority("PriorityUser1", "1");
         service.reservePriority("PriorityUser2", "1");
 
-        // Someone cancels a reservation (simulate copy return)
-        // We need to add a reservation first to cancel
-        // This reveals we need to modify our approach
-        service.reserve("RegularUser", "1"); // This will fail with 0 copies
+        // Regular user cancels - should assign to first waiting user
+        service.cancel("RegularUser", "1");
 
-        fail("Need to redesign - current approach doesn't handle waiting list assignment");
+        // PriorityUser1 should now have the book, PriorityUser2 still waiting
+        assertTrue(reservationRepo.existsByUserAndBook("PriorityUser1", "1"));
+        assertFalse(reservationRepo.existsByUserAndBook("PriorityUser2", "1"));
+        assertEquals(0, book.getCopiesAvailable()); // Still 0 copies (assigned to waiting user)
     }
-
 }
 
 
