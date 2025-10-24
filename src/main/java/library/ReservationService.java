@@ -39,6 +39,10 @@ public class ReservationService {
         bookRepo.save(book);
     }
 
+    public void reservePriority(String userId, String bookId) {
+        reserve(userId, bookId);
+    }
+
     /**
      * Cancel an existing reservation for a user.
      * Throws IllegalArgumentException if no such reservation exists.
@@ -73,8 +77,6 @@ public class ReservationService {
         return reservationRepo.findByBook(bookId);
     }
 
-    public void reservePriority(String userId, String bookId) {
-        reserve(userId, bookId);
-    }
+
 }
 
