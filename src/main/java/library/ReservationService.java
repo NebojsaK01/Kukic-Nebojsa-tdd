@@ -38,21 +38,24 @@ public class ReservationService {
             throw new IllegalArgumentException("Book not found");
         }
 
-        if (!isPriority && book.getCopiesAvailable() <= 0) {
-            throw new IllegalStateException("No copies available");
-        }
-
         if (reservationRepo.existsByUserAndBook(userId, bookId)) {
             throw new IllegalStateException("The user already reserved this book");
         }
 
-        Reservation reservation = new Reservation(userId, bookId);
-        reservationRepo.save(reservation);
-
-        // Only decrease copies if available
         if (book.getCopiesAvailable() > 0) {
+            // Normal reservation - decrease copies
+            Reservation reservation = new Reservation(userId, bookId);
+            reservationRepo.save(reservation);
             book.setCopiesAvailable(book.getCopiesAvailable() - 1);
             bookRepo.save(book);
+        } else if (isPriority) {
+            // Priority user - add to waiting list
+            waitingLists.computeIfAbsent(bookId, k -> new LinkedList<>()).add(userId);
+            // Still create reservation for tracking
+            Reservation reservation = new Reservation(userId, bookId);
+            reservationRepo.save(reservation);
+        } else {
+            throw new IllegalStateException("No copies available");
         }
     }
 
