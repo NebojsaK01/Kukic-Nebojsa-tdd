@@ -72,5 +72,9 @@ public class ReservationService {
         // TODO: Implement using TDD
         return reservationRepo.findByBook(bookId);
     }
+
+    public void reservePriority(String userId, String bookId) {
+        //empty
+    }
 }
 
