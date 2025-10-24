@@ -74,7 +74,7 @@ public class ReservationService {
     }
 
     public void reservePriority(String userId, String bookId) {
-        //empty
+        reserve(userId, bookId);
     }
 }
 
